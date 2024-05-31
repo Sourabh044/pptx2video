@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/convert.js') }} "></script>
+<script>
+  $(document).ready(function() {
+    $('.effects-select').select2({
+      dropdownCssClass:"text-bg-dark",
+      selectionCssClass: "text-bg-dark",
+      width : "100%",
+      placeholder :"Select Effect"
+    });
+});
+</script>
+{% endblock extra_js %}
+  
+
+{% block content %}
+<div class="container mt-5 border border-danger-subtle border-top-0">
+    <form enctype="multipart/form-data" id="convertForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="mb-3">
+            <label for="pptx_input" class="form-label">Upload PPTX File:</label>
+            <input required class="form-control" type="file" id="pptx_input" name="pptx">
+        </div>
+        <div class="mb-3">
+            <div class="form-floating">
+                <select class="form-select" id="resolution_select" name="resolution" aria-label="Floating label select example" required>
+                  <option value="1080">1080p</option>
+                  <option value="720">720p</option>
+                </select>
+                <label for="resolution_select">Select Quaility</label>
+              </div>
+        </div>
+
+        <div class="form-floating-select">
+          <label for="effectSelect">Select Effect</label>
+          <select class="form-select effects-select h-100" id="effectSelect" name="effect"  data-live-search="true" aria-label="Default select example">
+            {% for key,value in effects.items() %}
+            <option value="{{key}}">{{value.Description}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+
+        <div class="d-flex flex-row-reverse gap-1 mt-2">
+          <a href="#" class="btn btn-success w-25 mb-2 d-none" target="_blank" id="downloadBtn">Download</a>
+          <button type="submit" class="btn btn-success w-25 mb-2" id="submitBtn">Convert</button>
+          </div>
+    </form>
+    <script>
+    </script>
+</div>
+{% endblock content %}
+    

@@ -1,0 +1,65 @@
+<!-- Messages/Toasts -->
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+    <!-- Position it: -->
+    <!-- - `.toast-container` for spacing between toasts -->
+    <!-- - `top-0` & `end-0` to position the toasts in the upper right corner -->
+    <!-- - `.p-3` to prevent the toasts from sticking to the edge of the container  -->
+    <div class="toast-container top-0 end-0 p-3" id="toastContainer">
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <!-- Then put toasts within -->
+      {% for category, message in messages %}
+      <div class="toast bg-body-primary text-bg-{{category}} position-relative bd-example-toasts rounded-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{message}}
+          </div>
+          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-progress text-bg-dark"></div>
+      </div>
+      {% endfor %}
+      
+ 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const toastElList = document.querySelectorAll('.toast')
+      const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, {}))
+      // for (var toast of toastList){
+        //   toast.show();
+        //   setTimeout(() => toast.hide(), 3000);
+        // }
+        
+        toastList.forEach((toast, index) => {
+          const toastElement = toastElList[index];
+          const progressBar = toastElement.querySelector('.toast-progress');
+          
+          toast.show();
+          
+          let duration = 3000;  // Duration in milliseconds
+          let interval = 30;  // Interval for progress update in milliseconds
+          let step = interval / duration * 100;  // Calculate step for progress bar width
+          
+                let width = 100;
+                let progressInterval = setInterval(() => {
+                  width -= step;
+                  progressBar.style.width = width + '%';
+                  if (width <= 0) {
+                    clearInterval(progressInterval);
+                  }
+                }, interval);
+                
+                setTimeout(() => {
+                  toast.hide();
+                  clearInterval(progressInterval);
+                }, duration);
+              });
+            })
+  </script>
+  {% endif %}
+  {% endwith %}
+</div>
+</div>
+  <!-- Messages/Toasts Ends -->
