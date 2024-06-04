@@ -38,17 +38,26 @@
           <label for="effectSelect">Select Effect</label>
           <select class="form-select effects-select h-100" id="effectSelect" name="effect"  data-live-search="true" aria-label="Default select example">
             {% for key,value in effects.items() %}
-            <option value="{{key}}">{{value.Description}}</option>
+            <option value="{{value.id}}" {% if value.id==23 %}selected{% endif %}  >{{value.Description}}</option>
             {% endfor %}
           </select>
         </div>
 
+        <div class="mb-3 mt-1">
+          <label for="audio_input" class="form-label">Upload Audio File: Optional</label>
+          <input class="form-control" type="file" id="audio_input" name="audio">
+      </div>
 
         <div class="d-flex flex-row-reverse gap-1 mt-2">
           <a href="#" class="btn btn-success w-25 mb-2 d-none" target="_blank" id="downloadBtn">Download</a>
           <button type="submit" class="btn btn-success w-25 mb-2" id="submitBtn">Convert</button>
           </div>
     </form>
+
+    <div class="progress d-none" id="progressbar" role="progressbar" aria-label="Info striped example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-striped bg-info" style="width: 10%"></div>
+    </div>
+
     <script>
     </script>
 </div>
